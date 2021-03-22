@@ -1,0 +1,46 @@
+<div *ngIf="(company$ | async) as company">
+  <div *ngIf="company.id">
+    <div style="float:left;">
+      <h2>Company: </h2>
+      <form #companyForm="ngForm">
+        <div class="form-group">
+          <div [hidden]="true"><span>id: </span>{{company.id}}</div>
+          <div><span>name: </span>{{company.name}}</div>
+          <div><span>address: </span>{{company.street}}, {{company.zip}} {{company.locality}}</div>
+          <div><span>phone: </span><input type="text" class="form-control" name="phone" [(ngModel)]="company.phone"><a
+              href="tel:{{company.phone}}">{{company.phone}}</a>
+          </div>
+          <div><span>email: </span><input type="text" class="form-control" name="email" [(ngModel)]="company.email"><a
+              href="mailto:{{company.email}}">{{company.email}}</a></div>
+          <div><span>web: </span><input type="text" class="form-control" name="web" [(ngModel)]="company.web"><a
+              href="{{company.web}}">{{company.web}}</a></div>
+          <div><span>createdAt: </span>{{company.createdAt | date:'dd.MM.yyyy'}}</div>
+          <div><span>updatedAt: </span>{{company.updatedAt | date:'dd.MM.yyyy'}}</div>
+          <div><span>wkoLink: </span><a href="{{company.wkoLink}}">wko-firmen-seite</a></div>
+          <div><span>vormerken: </span><input type="checkbox" class="form-control" name="remember"
+              [(ngModel)]="company.remember"> </div>
+          <!-- [checked]="company.remember"> -->
+          <!-- {{ company | json }} -->
+          <button class="btn btn-primary" type="submit" (click)="updateCurrentCompany()">Speichern</button>
+        </div>
+      </form>
+    </div>
+    <div class="company-interactions" style="float:left;">
+      <h3>Interaktionen</h3>
+      <form #interactionForm="ngForm">
+        <!-- {{ interactionForm.value | json }}
+        <hr />
+        {{ interactionModel | json }} -->
+        <div class="form-group">
+          <textarea rows="4" cols="50" class="form-control" name="interactionText" [(ngModel)]="interactionModel.text">
+            Neuer Eintrag...
+          </textarea>
+          <button class="btn btn-primary" type="submit" (click)="saveInteraction()">Speichern</button>
+        </div>
+      </form>
+      <div *ngFor="let interaction of interactions$ | async">
+        <p>{{interaction.createdAt | date:'dd.MM.yyyy HH:mm'}}: {{interaction.text}}</p>
+      </div>
+    </div>
+  </div>
+</div>

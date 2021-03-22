@@ -1,0 +1,12 @@
+<h2>Companies</h2>
+<form #interactionForm="ngForm">
+  <div class="form-group">
+    <input type="text" class="form-control" name="companyFilterText" [(ngModel)]="companyFilterText"
+      (keyup.enter)="onFilterTextEnter()" autocomplete="on" placeholder="Filtertext eg !GmbH">
+  </div>
+</form>
+<ol class="companies">
+  <li *ngFor="let company of filteredCompanies$ | async" (click)="showInfo(company.id)">
+    <span>{{company.name}} ({{getLocationsString(company.locations)}} {{getCategoriesString(company.categories)}})</span>
+  </li>
+</ol>
